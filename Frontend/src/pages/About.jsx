@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
     Target, Users, Shield, Zap, Briefcase, Heart, TrendingUp, Award,
     Code, Database, Cloud, Cpu, Rocket, Globe, Lock, Sparkles,
-    CheckCircle, ArrowRight, Star
+    CheckCircle, ArrowRight, Star, Hexagon, Layers, Zap as ZapIcon, ShieldCheck
 } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -10,202 +10,135 @@ import Footer from '../components/layout/Footer';
 const About = () => {
     const [activeCard, setActiveCard] = useState(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setActiveCard((prev) => (prev + 1) % 4);
-        }, 3000);
-        return () => clearInterval(interval);
-    }, []);
-
     const techStack = [
-        { icon: Code, name: 'React', color: 'text-blue-500' },
-        { icon: Database, name: 'MongoDB', color: 'text-green-500' },
-        { icon: Cloud, name: 'Node.js', color: 'text-green-600' },
-        { icon: Cpu, name: 'Express', color: 'text-gray-600' },
+        { icon: Code, name: 'React v18', color: 'text-[#00d9ff]' },
+        { icon: Database, name: 'Cloud Clusters', color: 'text-[#ec4899]' },
+        { icon: Cloud, name: 'Node Engine', color: 'text-[#7c3aed]' },
+        { icon: Cpu, name: 'Express Core', color: 'text-white' },
     ];
 
     const features = [
         {
             icon: Rocket,
-            title: 'Lightning Fast',
-            description: 'Optimized performance for instant job searches and seamless browsing experience.',
-            color: 'blue',
-            gradient: 'from-blue-500 to-cyan-500'
+            title: 'Supersonic Transit',
+            description: 'Hyper-optimized performance layer for instantaneous candidate-job matching.',
+            gradient: 'from-[#00d9ff] to-[#7c3aed]'
         },
         {
-            icon: Shield,
-            title: 'Secure & Private',
-            description: 'Enterprise-grade security with encrypted data and secure authentication protocols.',
-            color: 'green',
-            gradient: 'from-green-500 to-emerald-500'
+            icon: ShieldCheck,
+            title: 'Quantum Security',
+            description: 'Military-grade encryption protocols securing every byte of professional data.',
+            gradient: 'from-[#7c3aed] to-[#ec4899]'
         },
         {
             icon: Globe,
-            title: 'Global Reach',
-            description: 'Connect with opportunities worldwide from top companies across all industries.',
-            color: 'purple',
-            gradient: 'from-purple-500 to-pink-500'
+            title: 'Universal Network',
+            description: 'Collapsing geographic barriers to connect global talent with frontier organizations.',
+            gradient: 'from-[#ec4899] to-[#fbbf24]'
         },
         {
             icon: Sparkles,
-            title: 'Smart Matching',
-            description: 'AI-powered job recommendations tailored to your skills and career aspirations.',
-            color: 'orange',
-            gradient: 'from-orange-500 to-red-500'
+            title: 'Neural Intelligence',
+            description: 'Advanced heuristic algorithms predicting your next career zenith with 99.9% precision.',
+            gradient: 'from-[#fbbf24] to-[#00d9ff]'
         }
     ];
 
     const stats = [
-        { icon: Briefcase, value: '10,000+', label: 'Active Jobs', color: 'blue' },
-        { icon: Users, value: '50,000+', label: 'Job Seekers', color: 'purple' },
-        { icon: Award, value: '5,000+', label: 'Companies', color: 'green' },
-        { icon: TrendingUp, value: '95%', label: 'Success Rate', color: 'orange' }
-    ];
-
-    const values = [
-        { icon: CheckCircle, text: 'Innovation First' },
-        { icon: CheckCircle, text: 'User-Centric Design' },
-        { icon: CheckCircle, text: 'Trust & Transparency' },
-        { icon: CheckCircle, text: 'Continuous Improvement' }
+        { icon: Briefcase, value: '25K+', label: 'Active Openings', color: 'blue' },
+        { icon: Users, value: '1.2M+', label: 'Verified Talent', color: 'purple' },
+        { icon: Award, value: '850+', label: 'Elite Partners', color: 'green' },
+        { icon: TrendingUp, value: '98%', label: 'Placement Rate', color: 'orange' }
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+        <div className="min-h-screen bg-[#0f1419] text-[#f1f5f9] font-sans selection:bg-[#00d9ff]/30">
             <Navbar />
 
-            <style>{`
-                @keyframes float {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50% { transform: translateY(-20px) rotate(5deg); }
-                }
-                @keyframes pulse-glow {
-                    0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-                    50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
-                }
-                @keyframes slide-up {
-                    from { opacity: 0; transform: translateY(30px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes rotate-slow {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-                .float-animation {
-                    animation: float 6s ease-in-out infinite;
-                }
-                .pulse-glow {
-                    animation: pulse-glow 2s ease-in-out infinite;
-                }
-                .slide-up {
-                    animation: slide-up 0.6s ease-out forwards;
-                }
-                .rotate-slow {
-                    animation: rotate-slow 20s linear infinite;
-                }
-            `}</style>
-
             {/* Hero Section */}
-            <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-                {/* Animated Background Elements */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl float-animation"></div>
-                    <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl float-animation" style={{ animationDelay: '2s' }}></div>
-                    <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-400/10 rounded-full blur-3xl float-animation" style={{ animationDelay: '4s' }}></div>
-                </div>
+            <section className="relative pt-32 pb-24 px-6 overflow-hidden">
+                {/* Background Glows */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00d9ff]/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4"></div>
+                <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#7c3aed]/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4"></div>
 
-                <div className="max-w-6xl mx-auto relative z-10">
-                    <div className="text-center mb-12">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-blue-200 dark:border-blue-800 rounded-full mb-6 shadow-lg">
-                            <Sparkles className="w-4 h-4 text-blue-600" />
-                            <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                Powered by Modern Technology
-                            </span>
-                        </div>
-
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                                Empowering Careers.
-                            </span>
-                            <br />
-                            <span className="text-gray-900 dark:text-white">Connecting Talent.</span>
-                        </h1>
-
-                        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-                            A cutting-edge recruitment platform built with <span className="font-semibold text-blue-600">modern technology</span> to connect talented professionals with leading companies worldwide.
-                        </p>
-
-                        {/* Tech Stack Icons */}
-                        <div className="flex items-center justify-center gap-8 mb-12">
-                            {techStack.map((tech, index) => (
-                                <div
-                                    key={index}
-                                    className="flex flex-col items-center gap-2 group cursor-pointer"
-                                    style={{ animationDelay: `${index * 0.2}s` }}
-                                >
-                                    <div className="p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2">
-                                        <tech.icon className={`w-8 h-8 ${tech.color}`} />
-                                    </div>
-                                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{tech.name}</span>
-                                </div>
-                            ))}
-                        </div>
+                <div className="max-w-[1400px] mx-auto relative z-10 text-center">
+                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8 animate-fade-in">
+                        <Sparkles className="w-4 h-4 text-[#00d9ff]" />
+                        <span className="text-xs font-black uppercase tracking-widest text-[#a0aec0]">
+                            The Vanguard of Recruitment
+                        </span>
                     </div>
 
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-                        {stats.map((stat, index) => (
-                            <div
-                                key={index}
-                                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 text-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-                            >
-                                <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl mb-4">
-                                    <stat.icon className="w-7 h-7 text-white" />
+                    <h1 className="text-3xl lg:text-6xl font-black mb-8 leading-[1.1] tracking-tight animate-slide-up">
+                        Engineering the <br />
+                        <span className="gradient-text">Future of Work</span>
+                    </h1>
+
+                    <p className="text-[#a0aec0] text-base lg:text-lg max-w-4xl mx-auto leading-relaxed mb-16 animate-slide-up animation-delay-200">
+                        We don't just find jobs. We architect professional destinies using <span className="text-white font-bold tracking-tight">high-fidelity matching</span> and frontier-grade user experiences.
+                    </p>
+
+                    {/* Tech Mosaic */}
+                    <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-12 mb-24 animate-slide-up animation-delay-300">
+                        {techStack.map((tech, index) => (
+                            <div key={index} className="flex flex-col items-center gap-4 group">
+                                <div className="w-20 h-20 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:border-[#00d9ff]/50 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(0,217,255,0.15)]">
+                                    <tech.icon className={`w-10 h-10 ${tech.color}`} />
                                 </div>
-                                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                                <span className="text-[10px] font-black text-[#a0aec0] uppercase tracking-widest">{tech.name}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Stats Matrix */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 animate-slide-up animation-delay-400">
+                        {stats.map((stat, index) => (
+                            <div key={index} className="glass-card p-8 group hover:bg-white/[0.03]">
+                                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                    <stat.icon className="w-6 h-6 text-[#00d9ff]" />
+                                </div>
+                                <div className="text-2xl font-black text-white mb-2 tracking-tight">
                                     {stat.value}
                                 </div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{stat.label}</div>
+                                <div className="text-[10px] font-bold text-[#a0aec0] uppercase tracking-widest">{stat.label}</div>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Features Section */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                            Why Choose <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">JobPortal</span>
-                        </h2>
-                        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                            Built with cutting-edge technology to deliver the best job search experience
-                        </p>
+            {/* Core Capabilities */}
+            <section className="py-32 bg-white/[0.02] border-y border-white/5 px-6">
+                <div className="max-w-[1400px] mx-auto">
+                    <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20 px-4">
+                        <div className="max-w-2xl">
+                            <h2 className="text-2xl lg:text-4xl font-black text-white mb-6 tracking-tight">
+                                Sovereign <span className="gradient-text">Protocol</span>
+                            </h2>
+                            <p className="text-[#a0aec0] text-base font-medium">
+                                A holistic ecosystem designed to empower sovereign professionals and elite organizations.
+                            </p>
+                        </div>
+                        <div className="hidden lg:block h-px flex-1 bg-white/10 mb-8 mx-12"></div>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {features.map((feature, index) => (
-                            <div
-                                key={index}
-                                className={`group relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden ${activeCard === index ? 'ring-2 ring-blue-500' : ''}
-                                    }`}
-                            >
-                                {/* Gradient Background */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-
-                                <div className="relative z-10">
-                                    <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                                        <feature.icon className="w-8 h-8 text-white" />
+                            <div key={index} className="glass-card p-12 group overflow-hidden relative">
+                                <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 blur-[80px] transition-opacity`}></div>
+                                <div className="relative z-10 flex gap-8">
+                                    <div className={`shrink-0 w-20 h-20 rounded-3xl bg-gradient-to-br ${feature.gradient} p-[1px] group-hover:scale-110 transition-all duration-500`}>
+                                        <div className="w-full h-full bg-[#0f1419] rounded-[22px] flex items-center justify-center">
+                                            <feature.icon className="w-10 h-10 text-white" />
+                                        </div>
                                     </div>
-                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-blue-600 transition-colors">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-                                        {feature.description}
-                                    </p>
-                                    <div className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-4 transition-all">
-                                        <span>Learn more</span>
-                                        <ArrowRight className="w-5 h-5" />
+                                    <div>
+                                        <h3 className="text-xl font-black text-white mb-4 tracking-tight group-hover:translate-x-2 transition-transform">
+                                            {feature.title}
+                                        </h3>
+                                        <p className="text-sm text-[#a0aec0] leading-relaxed font-regular">
+                                            {feature.description}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -214,70 +147,48 @@ const About = () => {
                 </div>
             </section>
 
-            {/* Mission Section */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 opacity-95"></div>
-
-                {/* Animated circles */}
-                <div className="absolute top-10 right-10 w-64 h-64 border-4 border-white/20 rounded-full rotate-slow"></div>
-                <div className="absolute bottom-10 left-10 w-48 h-48 border-4 border-white/20 rounded-full rotate-slow" style={{ animationDelay: '5s' }}></div>
-
+            {/* Mission Statement */}
+            <section className="py-40 relative px-6 overflow-hidden">
+                <div className="absolute inset-0 bg-[#7c3aed]/5 pointer-events-none"></div>
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full mb-8">
-                        <Target className="w-4 h-4 text-white" />
-                        <span className="text-sm font-semibold text-white">Our Mission</span>
+                    <div className="w-20 h-20 bg-gradient-to-br from-[#00d9ff] to-[#7c3aed] rounded-3xl flex items-center justify-center mx-auto mb-12 shadow-2xl shadow-[#00d9ff]/20">
+                        <Target className="w-10 h-10 text-white" />
                     </div>
-
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
-                        Building the Future of Work
+                    <h2 className="text-3xl lg:text-5xl font-black text-white mb-10 tracking-tight">
+                        Our Manifest.
                     </h2>
-                    <p className="text-lg text-white/90 leading-relaxed mb-12">
-                        We envision a world where every talented individual finds their dream job, and every company discovers the perfect candidate — all through one powerful, intuitive platform powered by modern technology.
+                    <p className="text-[#a0aec0] text-lg leading-relaxed font-medium mb-16">
+                        "To eliminate career friction and catalyze the next era of industrial expansion by connecting the right nodes in the human capital network."
                     </p>
-
-                    <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                        {values.map((value, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-white/20 transition-all duration-300"
-                            >
-                                <value.icon className="w-6 h-6 text-green-300 flex-shrink-0" />
-                                <span className="text-white font-medium">{value.text}</span>
-                            </div>
+                    
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {['Neural Analysis', 'Global Gateway', 'Verified Trust', 'Pro-Grade Tools'].map((tag, i) => (
+                            <span key={i} className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-widest">
+                                {tag}
+                            </span>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-950">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 mb-6">
-                        <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-                        <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-                        <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-                        <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-                        <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
-                    </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                        Ready to Start Your Journey?
-                    </h2>
-                    <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-                        Join thousands of professionals who have found their dream careers through JobPortal
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a
-                            href="/jobs"
-                            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-                        >
-                            Browse Jobs
-                        </a>
-                        <a
-                            href="/register"
-                            className="px-8 py-4 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-                        >
-                            Create Account
-                        </a>
+            {/* Final Call */}
+            <section className="pb-32 px-6">
+                <div className="max-w-[1400px] mx-auto">
+                    <div className="glass-card p-16 lg:p-24 text-center border-[#00d9ff]/20 bg-gradient-to-b from-white/[0.02] to-transparent">
+                        <h2 className="text-3xl lg:text-5xl font-black text-white mb-8 tracking-tighter">
+                            Ready to <span className="gradient-text">Ascend?</span>
+                        </h2>
+                        <p className="text-[#a0aec0] text-base mb-12 max-w-xl mx-auto font-medium">
+                            Join the upper echelon of professionals already leveraging our ecosystem.
+                        </p>
+                        <div className="flex flex-col sm:flex-row justify-center gap-6">
+                            <button onClick={() => window.location.href='/jobs'} className="btn-primary px-12 py-5 text-lg font-black tracking-widest uppercase">
+                                Explore Jobs
+                            </button>
+                            <button onClick={() => window.location.href='/register'} className="px-12 py-5 rounded-2xl border border-white/10 text-white font-black tracking-widest uppercase hover:bg-white/5 transition-all text-sm">
+                                Join Network
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -1,77 +1,115 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react';
+import { Rocket, Facebook, Twitter, Instagram, Linkedin, Mail, Send } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 const Footer = () => {
+    const [email, setEmail] = useState('');
+    const [subscribed, setSubscribed] = useState(false);
+
+    const handleSubscribe = (e) => {
+        e.preventDefault();
+        if (email) {
+            setSubscribed(true);
+            setEmail('');
+            setTimeout(() => setSubscribed(false), 3000);
+        }
+    };
+
     return (
-        <footer className="bg-gray-900 dark:bg-gray-950 text-white pt-16 pb-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                    {/* Brand */}
-                    <div className="space-y-4">
-                        <Link to="/" className="flex items-center gap-2">
-                            <div className="bg-blue-600 p-1.5 rounded-lg">
-                                <Briefcase className="w-5 h-5 text-white" />
+        <footer className="bg-[#0f1419] text-[#f1f5f9] border-t border-white/5 pt-20 pb-10">
+            <div className="max-w-[1400px] mx-auto px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-20 mb-20">
+                    {/* Brand Section */}
+                    <div className="space-y-8">
+                        <Link to="/" className="flex items-center gap-3 group">
+                            <div className="bg-gradient-to-br from-[#00d9ff] to-[#7c3aed] p-2 rounded-xl group-hover:rotate-12 transition-transform duration-300">
+                                <Rocket className="w-6 h-6 text-white" />
                             </div>
-                            <span className="text-xl font-bold">JobPortal</span>
+                            <span className="text-2xl font-extrabold gradient-text">JobPortal</span>
                         </Link>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                            Connecting exceptional talent with world-class employers. Your future starts here.
+                        <p className="text-[#a0aec0] leading-relaxed">
+                            Connecting exceptional talent with world-class employers. Building the future of work through innovation and opportunity.
                         </p>
-                        <div className="flex gap-4 pt-2">
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook className="w-5 h-5" /></a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
+                        <div className="flex gap-4">
+                            {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
+                                <a key={idx} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-[#a0aec0] hover:text-[#00d9ff] hover:bg-white/10 transition-all">
+                                    <Icon className="w-5 h-5" />
+                                </a>
+                            ))}
                         </div>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">For Candidates</h3>
-                        <ul className="space-y-3 text-gray-400 text-sm">
-                            <li><Link to="/jobs" className="hover:text-white transition-colors">Browse Jobs</Link></li>
-                            <li><Link to="/companies" className="hover:text-white transition-colors">Browse Companies</Link></li>
-                            <li><Link to="/dashboard" className="hover:text-white transition-colors">Candidate Dashboard</Link></li>
-                            <li><Link to="/saved-jobs" className="hover:text-white transition-colors">Saved Jobs</Link></li>
+                        <h3 className="text-lg font-bold mb-8 text-white">For Candidates</h3>
+                        <ul className="space-y-4">
+                            {['Browse Jobs', 'Companies', 'Dashboard', 'Career Advice'].map((item) => (
+                                <li key={item}>
+                                    <Link to="#" className="text-[#a0aec0] hover:text-[#00d9ff] transition-colors flex items-center gap-2 group">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#00d9ff] opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* For Employers */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">For Employers</h3>
-                        <ul className="space-y-3 text-gray-400 text-sm">
-                            <li><Link to="/post-job" className="hover:text-white transition-colors">Post a Job</Link></li>
-                            <li><Link to="/employer/dashboard" className="hover:text-white transition-colors">Employer Dashboard</Link></li>
-                            <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing Plans</Link></li>
-                            <li><Link to="/resources" className="hover:text-white transition-colors">Recruiting Resources</Link></li>
+                        <h3 className="text-lg font-bold mb-8 text-white">For Employers</h3>
+                        <ul className="space-y-4">
+                            {['Post a Job', 'Recruiting Tips', 'Pricing Plans', 'Job Analytics'].map((item) => (
+                                <li key={item}>
+                                    <Link to="#" className="text-[#a0aec0] hover:text-[#00d9ff] transition-colors flex items-center gap-2 group">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    {/* Newsletter */}
-                    <div>
-                        <h3 className="font-semibold text-lg mb-4">Stay Updated</h3>
-                        <p className="text-gray-400 text-sm mb-4">Subscribe to our newsletter for the latest job market updates.</p>
-                        <div className="flex gap-2">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="bg-gray-800 text-white px-4 py-2 rounded-md w-full focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            />
-                            <Button size="sm" className="px-3">
-                                <Mail className="w-4 h-4" />
-                            </Button>
-                        </div>
+                    {/* Stay Updated */}
+                    <div className="space-y-8">
+                        <h3 className="text-lg font-bold text-white">Stay Updated</h3>
+                        <p className="text-[#a0aec0]">Get the latest job market insights delivered to your inbox.</p>
+                        <form onSubmit={handleSubscribe} className="space-y-4">
+                            <div className="relative group">
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Enter your email"
+                                    className="w-full bg-white/5 border border-white/10 text-white px-5 py-4 rounded-xl focus:outline-none focus:border-[#00d9ff]/50 transition-all placeholder:text-[#a0aec0]/50"
+                                    required
+                                />
+                                <button
+                                    type="submit"
+                                    className="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-[#00d9ff] to-[#7c3aed] text-white px-4 rounded-lg flex items-center justify-center hover:scale-105 transition-transform"
+                                >
+                                    <Send className="w-4 h-4" />
+                                </button>
+                            </div>
+                            {subscribed && (
+                                <p className="text-green-400 text-xs font-medium flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                                    Subscribed successfully!
+                                </p>
+                            )}
+                        </form>
                     </div>
                 </div>
 
-                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-                    <p>© 2026 JobPortal. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
-                        <Link to="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
+                <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p className="text-[#a0aec0] text-sm">
+                        © 2026 <span className="text-[#00d9ff] font-bold">JobPortal</span>. Built with ❤️ for professionals.
+                    </p>
+                    <div className="flex gap-8">
+                        {['Privacy', 'Terms', 'Cookies', 'Contact'].map((item) => (
+                            <Link key={item} to="#" className="text-[#a0aec0] hover:text-[#00d9ff] text-sm transition-colors">
+                                {item}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -80,3 +118,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

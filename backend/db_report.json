@@ -1,0 +1,50 @@
+[
+  {
+    "fullname": "Test User",
+    "email": "test@example.com",
+    "role": "student",
+    "jobs_count": 0
+  },
+  {
+    "fullname": "djkf",
+    "email": "jj@123",
+    "role": "student",
+    "jobs_count": 0
+  },
+  {
+    "fullname": "Admin",
+    "email": "admin@jobportal.com",
+    "role": "student",
+    "jobs_count": 0
+  },
+  {
+    "fullname": "Deepak ",
+    "email": "Deepak@gmail.com",
+    "role": "recruiter",
+    "jobs_count": 50
+  },
+  {
+    "fullname": "Diya",
+    "email": "diya@gmail.com",
+    "role": "recruiter",
+    "jobs_count": 1
+  },
+  {
+    "fullname": "Vijeta Chandel",
+    "email": "vijetachandel1709@gmail.com",
+    "role": "recruiter",
+    "jobs_count": 5
+  },
+  {
+    "fullname": "Riya Kumari",
+    "email": "riya@gmail.com",
+    "role": "student",
+    "jobs_count": 0
+  },
+  {
+    "fullname": "radhika",
+    "email": "radhika@gmail.com",
+    "role": "student",
+    "jobs_count": 0
+  }
+]

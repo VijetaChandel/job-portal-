@@ -4,18 +4,19 @@ import { Button } from '../components/ui/Button';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { useAuth } from '../context/AuthContext';
+import { User, Mail, Phone, Lock, UserPlus, ShieldCheck, UserCheck, ArrowRight, Sparkles } from 'lucide-react';
 
 const Register = () => {
     const navigate = useNavigate();
     const { signup } = useAuth();
 
-    // Get role from URL query param if present
     const queryParams = new URLSearchParams(window.location.search);
     const initialRole = queryParams.get('role') === 'recruiter' ? 'recruiter' : 'student';
 
-    const [role, setRole] = useState(initialRole); // 'student' or 'recruiter'
+    const [role, setRole] = useState(initialRole);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [focusedField, setFocusedField] = useState(null);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -31,7 +32,6 @@ const Register = () => {
             role: role
         };
 
-        // Basic validation
         if (!userData.fullname || !userData.email || !userData.password || !userData.phoneNumber) {
             setError("All fields are required");
             setLoading(false);
@@ -41,8 +41,6 @@ const Register = () => {
         const result = await signup(userData);
 
         if (result.success) {
-            // Always navigate to login after successful registration
-            // This avoids issues where protected routes kick out unauthenticated recruiters
             navigate('/login');
         } else {
             setError(result.message);
@@ -51,105 +49,138 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
+        <div className="min-h-screen bg-[#0f1419] flex flex-col relative overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#00d9ff]/5 rounded-full blur-[120px] animate-pulse"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#7c3aed]/5 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '3s' }}></div>
+
             <Navbar />
-            <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
-                    <div>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-                            Create a {role === 'recruiter' ? 'Recruiter' : 'Job Seeker'} Account
-                        </h2>
-                        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+
+            <div className="flex-grow flex flex-col lg:flex-row relative z-10">
+                {/* Left Side: Illustration & Value Proposition */}
+                <div className="hidden lg:flex lg:w-1/2 p-20 flex-col justify-center border-r border-white/5 bg-white/[0.02]">
+                    <div className="max-w-xl animate-fade-in-up">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00d9ff]/10 border border-[#00d9ff]/30 text-[#00d9ff] text-xs font-bold tracking-widest uppercase mb-8">
+                            <Sparkles className="w-3 h-3" />
+                            Join the Future of Work
+                        </div>
+                        <h1 className="text-6xl font-extrabold mb-8 leading-tight">
+                            Elevate Your <span className="gradient-text">Journey</span> With Us.
+                        </h1>
+                        <p className="text-[#a0aec0] text-xl leading-relaxed mb-12">
+                            Whether you're a visionary employer or a top-tier talent, Antigravity connects you to a world of possibilities.
+                        </p>
+
+                        <div className="space-y-6">
+                            {[
+                                { title: 'Direct Access', desc: 'Connect with industry leaders in real-time.' },
+                                { title: 'AI Matching', desc: 'Find the perfect fit based on your unique skills.' },
+                                { title: 'Verified Profiles', desc: 'Safe and secure environment for everyone.' }
+                            ].map((item, idx) => (
+                                <div key={idx} className="flex gap-4 items-start group">
+                                    <div className="w-1.5 h-10 bg-gradient-to-b from-[#00d9ff] to-[#7c3aed] rounded-full opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                                    <div>
+                                        <h3 className="text-white font-bold text-lg mb-1">{item.title}</h3>
+                                        <p className="text-[#a0aec0] text-sm">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Side: Registration Form */}
+                <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+                    <div className="glass-card w-full max-w-lg p-6 sm:p-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        <div className="text-center mb-10">
+                            <h2 className="text-3xl md:text-4xl font-extrabold mb-3">
+                                Create <span className="gradient-text">Account</span>
+                            </h2>
+                            <p className="text-[#a0aec0] text-xs md:text-sm font-medium">
+                                Start your professional journey in minutes.
+                            </p>
+                        </div>
+
+                        {error && (
+                            <div className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl text-sm text-center mb-8 animate-shake">
+                                {error}
+                            </div>
+                        )}
+
+                        {/* Role Toggle */}
+                        <div className="flex justify-center mb-10">
+                            <div className="bg-white/5 p-1 rounded-2xl flex relative w-full border border-white/10">
+                                <div
+                                    className={`absolute top-1 bottom-1 rounded-xl bg-gradient-to-r from-[#00d9ff] to-[#7c3aed] transition-all duration-300 ease-out shadow-lg ${
+                                        role === 'student' ? 'left-1 w-[calc(50%-4px)]' : 'left-[calc(50%+2px)] w-[calc(50%-4px)]'
+                                    }`}
+                                ></div>
+                                
+                                <button
+                                    type="button"
+                                    onClick={() => setRole('student')}
+                                    className={`relative flex-1 py-3 rounded-xl text-sm font-bold transition-colors duration-200 z-10 flex items-center justify-center gap-2 ${
+                                        role === 'student' ? 'text-white' : 'text-[#a0aec0] hover:text-white'
+                                    }`}
+                                >
+                                    <UserCheck className="w-4 h-4" />
+                                    Job Seeker
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setRole('recruiter')}
+                                    className={`relative flex-1 py-3 rounded-xl text-sm font-bold transition-colors duration-200 z-10 flex items-center justify-center gap-2 ${
+                                        role === 'recruiter' ? 'text-white' : 'text-[#a0aec0] hover:text-white'
+                                    }`}
+                                >
+                                    <ShieldCheck className="w-4 h-4" />
+                                    Recruiter
+                                </button>
+                            </div>
+                        </div>
+
+                        <form className="space-y-5" onSubmit={handleRegister}>
+                            {[
+                                { id: 'name', label: 'Full Name', icon: User, type: 'text' },
+                                { id: 'email', label: 'Email Address', icon: Mail, type: 'email' },
+                                { id: 'phoneNumber', label: 'Phone Number', icon: Phone, type: 'tel' },
+                                { id: 'password', label: 'Password', icon: Lock, type: 'password' }
+                            ].map((field) => (
+                                <div key={field.id} className="relative group">
+                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                        <field.icon className={`h-5 w-5 transition-colors ${focusedField === field.id ? 'text-[#00d9ff]' : 'text-[#a0aec0]'}`} />
+                                    </div>
+                                    <input
+                                        name={field.id}
+                                        type={field.type}
+                                        required
+                                        onFocus={() => setFocusedField(field.id)}
+                                        onBlur={() => setFocusedField(null)}
+                                        className="w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-xl focus:outline-none focus:border-[#00d9ff]/50 transition-all placeholder:text-[#a0aec0]/40 font-medium"
+                                        placeholder={field.label}
+                                    />
+                                </div>
+                            ))}
+
+                            <Button 
+                                type="submit" 
+                                className="w-full btn-primary py-4 text-base font-bold shadow-xl shadow-[#00d9ff]/20 mt-8" 
+                                disabled={loading}
+                            >
+                                {loading ? 'Creating Profile...' : `Join as ${role === 'recruiter' ? 'Recruiter' : 'Job Seeker'}`}
+                            </Button>
+                        </form>
+
+                        <p className="mt-10 text-center text-[#a0aec0] text-sm">
                             Already have an account?{' '}
-                            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
-                                Sign in
+                            <Link to="/login" className="text-[#00d9ff] hover:text-[#7c3aed] font-bold transition-all underline decoration-[#00d9ff]/30 underline-offset-4">
+                                Sign In
                             </Link>
                         </p>
                     </div>
-
-                    {error && (
-                        <div className="bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 p-3 rounded-md text-sm text-center">
-                            {error}
-                        </div>
-                    )}
-
-                    <div className="flex justify-center gap-4 mb-6 bg-gray-100 dark:bg-gray-700 p-1 rounded-full">
-                        <button
-                            type="button"
-                            onClick={() => setRole('student')}
-                            className={`flex-1 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${role === 'student' ? 'bg-white dark:bg-gray-600 text-blue-700 dark:text-blue-300 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
-                        >
-                            Job Seeker
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setRole('recruiter')}
-                            className={`flex-1 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${role === 'recruiter' ? 'bg-white dark:bg-gray-600 text-blue-700 dark:text-blue-300 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
-                        >
-                            Recruiter
-                        </button>
-                    </div>
-
-                    <form className="mt-8 space-y-6" onSubmit={handleRegister}>
-                        <div className="rounded-md shadow-sm -space-y-px">
-                            <div className="mb-4">
-                                <label htmlFor="name" className="sr-only">Full Name</label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    autoComplete="name"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Full Name"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="email-address" className="sr-only">Email address</label>
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Email address"
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="phoneNumber" className="sr-only">Phone Number</label>
-                                <input
-                                    id="phoneNumber"
-                                    name="phoneNumber"
-                                    type="tel"
-                                    autoComplete="tel"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Phone Number"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="sr-only">Password</label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="new-password"
-                                    required
-                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-700 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                                    placeholder="Password"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <Button type="submit" className="w-full flex justify-center" disabled={loading}>
-                                {loading ? 'Creating Account...' : 'Create Account'}
-                            </Button>
-                        </div>
-                    </form>
                 </div>
             </div>
+
             <Footer />
         </div>
     );

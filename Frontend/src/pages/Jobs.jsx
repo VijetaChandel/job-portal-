@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Search, MapPin } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, MapPin, Filter, X, Briefcase, IndianRupee, Star, Sparkles } from 'lucide-react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import JobCard from '../components/ui/JobCard';
@@ -21,6 +21,7 @@ const Jobs = () => {
 
     const fetchJobs = async (keyword = '', location = '', jobType = '', experience = '', salary = '') => {
         try {
+            setLoading(true);
             const response = await axios.get(`/api/v1/job/get?keyword=${keyword}&location=${location}&jobType=${jobType}&experience=${experience}&salary=${salary}`, {
                 withCredentials: true
             });
@@ -43,149 +44,162 @@ const Jobs = () => {
         }
     }, [filterJobType, filterExperience, filterSalary]);
 
+    const resetFilters = () => {
+        setSearchKeyword('');
+        setSearchLocation('');
+        setFilterJobType('');
+        setFilterExperience('');
+        setFilterSalary('');
+        fetchJobs('', '', '', '', '');
+    };
+
     return (
-        <div className="min-h-screen bg-white dark:bg-gray-950">
+        <div className="min-h-screen bg-[#0f1419] flex flex-col relative overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00d9ff]/5 rounded-full blur-[120px] -z-10"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#7c3aed]/5 rounded-full blur-[120px] -z-10"></div>
+
             <Navbar />
-            <main className="pt-20">
-                <section className="py-12 bg-gray-50 dark:bg-gray-900 min-h-[calc(100vh-80px)]">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="mb-8">
-                            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Find Your Dream Job</h1>
-                            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-                                Browse our curated list of positions from top companies.
-                            </p>
 
-                            {/* Search Bar */}
-                            <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
-                                <div className="flex flex-col md:flex-row gap-4">
-                                    <div className="flex-1 flex items-center px-4 h-12 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
-                                        <Search className="w-5 h-5 text-gray-400 mr-3" />
-                                        <input
-                                            type="text"
-                                            placeholder="Job title, keywords, or company"
-                                            value={searchKeyword}
-                                            onChange={(e) => setSearchKeyword(e.target.value)}
-                                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                            className="w-full bg-transparent focus:outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                                        />
-                                    </div>
-                                    <div className="flex-1 flex items-center px-4 h-12 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
-                                        <MapPin className="w-5 h-5 text-gray-400 mr-3" />
-                                        <input
-                                            type="text"
-                                            placeholder="City, state, or zip code"
-                                            value={searchLocation}
-                                            onChange={(e) => setSearchLocation(e.target.value)}
-                                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                            className="w-full bg-transparent focus:outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
-                                        />
-                                    </div>
-                                    <Button onClick={handleSearch} size="lg" className="h-12 w-full md:w-auto px-8">
-                                        Search
-                                    </Button>
-                                </div>
+            <main className="flex-grow pt-32 pb-20">
+                <div className="max-w-[1400px] mx-auto px-6">
+                    {/* Header */}
+                    <div className="mb-16 animate-fade-in-up">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00d9ff]/10 border border-[#00d9ff]/30 text-[#00d9ff] text-xs font-bold tracking-widest uppercase mb-6">
+                            <Sparkles className="w-3 h-3" />
+                            Discover Your Career
+                        </div>
+                        <h1 className="text-4xl lg:text-7xl font-extrabold mb-6 leading-tight">
+                            Find Your Dream <span className="gradient-text">Job Today</span>
+                        </h1>
+                        <p className="text-[#a0aec0] text-xl max-w-3xl leading-relaxed">
+                            Browse through thousands of high-impact roles from industry-leading companies and start-ups.
+                        </p>
+                    </div>
 
-                                {/* Advanced Filters */}
-                                <div className="mt-6 flex flex-wrap gap-4 pt-6 border-t border-gray-100 dark:border-gray-700">
-                                    <div className="flex-1 min-w-[150px]">
-                                        <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase mb-2 tracking-wider">Job Type</label>
-                                        <select
-                                            value={filterJobType}
-                                            onChange={(e) => setFilterJobType(e.target.value)}
-                                            className="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all font-medium text-gray-700 dark:text-gray-200"
-                                        >
-                                            <option value="">All Types</option>
-                                            <option value="Full-time">Full-time</option>
-                                            <option value="Part-time">Part-time</option>
-                                            <option value="Internship">Internship</option>
-                                            <option value="Contract">Contract</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="flex-1 min-w-[150px]">
-                                        <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase mb-2 tracking-wider">Experience</label>
-                                        <select
-                                            value={filterExperience}
-                                            onChange={(e) => setFilterExperience(e.target.value)}
-                                            className="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all font-medium text-gray-700 dark:text-gray-200"
-                                        >
-                                            <option value="">Any Experience</option>
-                                            <option value="0">Entry Level (0 years)</option>
-                                            <option value="1">1 year</option>
-                                            <option value="2">2 years</option>
-                                            <option value="3">3+ years</option>
-                                            <option value="5">5+ years</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="flex-1 min-w-[150px]">
-                                        <label className="block text-xs font-bold text-gray-400 dark:text-gray-500 uppercase mb-2 tracking-wider">Salary Range</label>
-                                        <select
-                                            value={filterSalary}
-                                            onChange={(e) => setFilterSalary(e.target.value)}
-                                            className="w-full h-10 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all font-medium text-gray-700 dark:text-gray-200"
-                                        >
-                                            <option value="">Any Salary</option>
-                                            <option value="0-300000">₹0 - ₹3L</option>
-                                            <option value="300000-600000">₹3L - ₹6L</option>
-                                            <option value="600000-1200000">₹6L - ₹12L</option>
-                                            <option value="1200000">₹12L+</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="flex items-end">
-                                        <button
-                                            onClick={() => {
-                                                setSearchKeyword('');
-                                                setSearchLocation('');
-                                                setFilterJobType('');
-                                                setFilterExperience('');
-                                                setFilterSalary('');
-                                                fetchJobs('', '', '', '', '');
-                                            }}
-                                            className="h-10 px-4 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-red-500 transition-colors"
-                                        >
-                                            Reset
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="mt-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
-                                    <span className="font-medium">Popular:</span>
-                                    {['Software Engineer', 'Product Manager', 'Data Scientist', 'Designer'].map((term) => (
-                                        <button
-                                            key={term}
-                                            onClick={() => {
-                                                setSearchKeyword(term);
-                                                fetchJobs(term);
-                                            }}
-                                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition-colors text-gray-700 dark:text-gray-300"
-                                        >
-                                            {term}
-                                        </button>
-                                    ))}
-                                </div>
+                    {/* Search & Filter Section */}
+                    <div className="glass-card p-6 lg:p-8 mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                        <div className="flex flex-col lg:flex-row gap-6">
+                            {/* Search Title */}
+                            <div className="flex-1 relative group">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#a0aec0] group-focus-within:text-[#00d9ff] transition-colors" />
+                                <input
+                                    type="text"
+                                    placeholder="Title, keyword, or company"
+                                    value={searchKeyword}
+                                    onChange={(e) => setSearchKeyword(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                                    className="w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-xl focus:outline-none focus:border-[#00d9ff]/50 transition-all placeholder:text-[#a0aec0]/40 font-medium"
+                                />
                             </div>
+
+                            {/* Search Location */}
+                            <div className="flex-1 relative group">
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#a0aec0] group-focus-within:text-[#00d9ff] transition-colors" />
+                                <input
+                                    type="text"
+                                    placeholder="Location"
+                                    value={searchLocation}
+                                    onChange={(e) => setSearchLocation(e.target.value)}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                                    className="w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-xl focus:outline-none focus:border-[#00d9ff]/50 transition-all placeholder:text-[#a0aec0]/40 font-medium"
+                                />
+                            </div>
+
+                            <Button onClick={handleSearch} className="btn-primary px-10 py-4 h-auto shadow-lg shadow-[#00d9ff]/20">
+                                Search Jobs
+                            </Button>
                         </div>
 
+                        {/* Filters Row */}
+                        <div className="mt-10 flex flex-wrap items-center gap-6 pt-8 border-t border-white/5">
+                            <div className="flex items-center gap-2 text-[#a0aec0] font-bold text-sm uppercase tracking-wider mr-4">
+                                <Filter className="w-4 h-4" />
+                                Filters
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 flex-grow">
+                                <select
+                                    value={filterJobType}
+                                    onChange={(e) => setFilterJobType(e.target.value)}
+                                    className="bg-white/5 border border-white/10 text-[#f1f5f9] px-4 py-2.5 rounded-xl text-sm font-semibold focus:outline-none focus:border-[#00d9ff]/50 transition-all"
+                                >
+                                    <option value="" className="bg-[#0f1419]">All Types</option>
+                                    <option value="Full-time" className="bg-[#0f1419]">Full-time</option>
+                                    <option value="Part-time" className="bg-[#0f1419]">Part-time</option>
+                                    <option value="Internship" className="bg-[#0f1419]">Internship</option>
+                                    <option value="Contract" className="bg-[#0f1419]">Contract</option>
+                                </select>
+
+                                <select
+                                    value={filterExperience}
+                                    onChange={(e) => setFilterExperience(e.target.value)}
+                                    className="bg-white/5 border border-white/10 text-[#f1f5f9] px-4 py-2.5 rounded-xl text-sm font-semibold focus:outline-none focus:border-[#00d9ff]/50 transition-all"
+                                >
+                                    <option value="" className="bg-[#0f1419]">Experience</option>
+                                    <option value="0" className="bg-[#0f1419]">Entry (0y)</option>
+                                    <option value="1" className="bg-[#0f1419]">1y+</option>
+                                    <option value="3" className="bg-[#0f1419]">3y+</option>
+                                    <option value="5" className="bg-[#0f1419]">5y+</option>
+                                </select>
+
+                                <select
+                                    value={filterSalary}
+                                    onChange={(e) => setFilterSalary(e.target.value)}
+                                    className="bg-white/5 border border-white/10 text-[#f1f5f9] px-4 py-2.5 rounded-xl text-sm font-semibold focus:outline-none focus:border-[#00d9ff]/50 transition-all"
+                                >
+                                    <option value="" className="bg-[#0f1419]">Salary</option>
+                                    <option value="0-300000" className="bg-[#0f1419]">Below 3L</option>
+                                    <option value="300000-600000" className="bg-[#0f1419]">3L - 6L</option>
+                                    <option value="600000-1200000" className="bg-[#0f1419]">6L - 12L</option>
+                                    <option value="1200000" className="bg-[#0f1419]">12L+</option>
+                                </select>
+                            </div>
+
+                            <button
+                                onClick={resetFilters}
+                                className="flex items-center gap-2 text-[#a0aec0] hover:text-[#ec4899] text-sm font-bold transition-colors group"
+                            >
+                                <X className="w-4 h-4 group-hover:rotate-90 transition-transform" />
+                                Reset All
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Results Count & Sort */}
+                    <div className="flex justify-between items-center mb-8 px-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                        <p className="text-[#a0aec0]">
+                            Showing <span className="text-white font-bold">{jobs.length}</span> opportunities
+                        </p>
+                    </div>
+
+                    {/* Job Grid */}
+                    <div className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                         {loading ? (
-                            <div className="text-center py-12">
-                                <div className="text-gray-500 dark:text-gray-400">Loading jobs...</div>
+                            <div className="text-center py-32 glass-card">
+                                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full border-4 border-[#00d9ff]/10 border-t-[#00d9ff] animate-spin mb-4"></div>
+                                <p className="text-[#a0aec0] font-bold">Scanning database...</p>
                             </div>
                         ) : jobs.length === 0 ? (
-                            <div className="text-center py-12">
-                                <div className="text-gray-500 dark:text-gray-400">No jobs found. Try a different search.</div>
+                            <div className="text-center py-32 glass-card">
+                                <Briefcase className="w-16 h-16 text-[#a0aec0]/20 mx-auto mb-6" />
+                                <h3 className="text-2xl font-bold text-white mb-2">No Matches Found</h3>
+                                <p className="text-[#a0aec0]">Try refining your search keywords or location.</p>
+                                <Button onClick={resetFilters} variant="outline" className="mt-8 border-white/10 hover:bg-white/5">
+                                    Clear All Filters
+                                </Button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {jobs.map((job) => (
                                     <JobCard key={job._id} job={job} />
                                 ))}
                             </div>
                         )}
                     </div>
-                </section>
+                </div>
             </main>
+
             <Footer />
         </div>
     );

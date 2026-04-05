@@ -2,72 +2,73 @@ import React from 'react';
 import JobCard from '../ui/JobCard';
 import { Button } from '../ui/Button';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 const MOCK_JOBS = [
     {
         id: 1,
-        title: 'Senior Frontend Engineer',
-        company: 'TechCorp',
-        location: 'Remote',
+        title: 'Senior Designer',
+        company: 'Google',
+        location: 'Mountain View, CA',
         type: 'Full-time',
-        salary: '$120k - $160k',
+        salary: '$150k - $210k',
         level: 'Senior',
+        isFeatured: true,
     },
     {
         id: 2,
-        title: 'Product Designer',
-        company: 'Creative Studio',
-        location: 'San Francisco, CA',
+        title: 'ML Engineer',
+        company: 'Meta',
+        location: 'Remote',
         type: 'Full-time',
-        salary: '$100k - $140k',
+        salary: '$140k - $200k',
         level: 'Mid-Level',
+        isNew: true,
     },
     {
         id: 3,
-        title: 'Backend Developer',
-        company: 'DataSystems',
-        location: 'New York, NY',
-        type: 'Contract',
-        salary: '$80 - $120 / hr',
-        level: 'Senior',
+        title: 'Frontend Lead',
+        company: 'Netflix',
+        location: 'Los Gatos, CA',
+        type: 'Full-time',
+        salary: '$180k - $240k',
+        level: 'Lead',
     },
     {
         id: 4,
-        title: 'Marketing Manager',
-        company: 'Growth.io',
-        location: 'Austin, TX',
-        type: 'Full-time',
-        salary: '$90k - $120k',
-        level: 'Mid-Level',
+        title: 'Backend Dev',
+        company: 'Amazon',
+        location: 'Seattle, WA',
+        type: 'Contract',
+        salary: '$120 - $160 / hr',
+        level: 'Senior',
     },
 ];
 
 const FeaturedJobs = () => {
     return (
-        <section className="py-20 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-end mb-12">
-                    <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Jobs</h2>
-                        <p className="text-gray-600 max-w-2xl">
-                            Discover your next career move with our curated list of top positions from industry-leading companies.
+        <section className="py-24 relative">
+            <div className="max-w-[1400px] mx-auto px-6">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div className="animate-fade-in-up">
+                        <h2 className="text-4xl lg:text-6xl font-extrabold mb-6">
+                            Featured <span className="gradient-text">Opportunities</span>
+                        </h2>
+                        <p className="text-[#a0aec0] text-xl max-w-2xl">
+                            Hand-picked roles from top companies. Your next career milestone is just one click away.
                         </p>
                     </div>
-                    <Link to="/jobs" className="hidden md:block">
-                        <Button variant="link">View All Jobs &rarr;</Button>
+                    <Link to="/jobs" className="group">
+                        <Button variant="ghost" className="text-[#00d9ff] hover:text-[#7c3aed] text-lg font-bold flex items-center gap-2 group-hover:translate-x-2 transition-all">
+                            View All Jobs <ArrowRight className="w-5 h-5" />
+                        </Button>
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {MOCK_JOBS.map((job) => (
                         <JobCard key={job.id} job={job} />
                     ))}
-                </div>
-
-                <div className="mt-12 text-center md:hidden">
-                    <Link to="/jobs">
-                        <Button variant="outline" className="w-full">View All Jobs</Button>
-                    </Link>
                 </div>
             </div>
         </section>
@@ -75,3 +76,4 @@ const FeaturedJobs = () => {
 };
 
 export default FeaturedJobs;
+

@@ -13,6 +13,7 @@ import EditJob from './pages/Recruiter/EditJob';
 import JobApplicants from './pages/Recruiter/JobApplicants';
 import Settings from './pages/Recruiter/Settings';
 import AdminOverview from './pages/Recruiter/AdminOverview';
+import FeaturesPricing from './pages/FeaturesPricing';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/:id" element={<JobDetails />} />
         <Route path="/about" element={<About />} />
+        <Route path="/features" element={<FeaturesPricing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={
