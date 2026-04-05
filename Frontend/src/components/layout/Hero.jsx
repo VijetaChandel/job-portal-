@@ -105,44 +105,42 @@ const Hero = () => {
                     </div>
                 </div>
 
-                {/* 2. SCROLLING CONTENT AREA Section */}
-                <div className="relative mx-auto max-w-5xl rounded-3xl border border-white/5 bg-white/[0.01] overflow-hidden p-12">
-                    <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#0f1419] to-transparent z-20 pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#0f1419] to-transparent z-20 pointer-events-none" />
-                    
-                    <div className="h-[650px] overflow-hidden relative">
-                        <div className="flex flex-col gap-6 animate-scroll-up">
-                            {scrollingCards.map((job, idx) => (
-                                <div key={idx} className={`glass-card p-10 flex flex-col md:flex-row items-center justify-between gap-8 border-white/5 hover:border-[#00d9ff]/30 transition-all group shrink-0`}>
-                                    <div className="flex items-center gap-8">
-                                        <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${job.color} flex items-center justify-center p-5 shadow-xl`}>
-                                            {job.logo}
-                                        </div>
-                                        <div>
-                                            <h4 className="text-white text-2xl font-black mb-2 group-hover:text-[#00d9ff] transition-colors">{job.role}</h4>
-                                            <div className="flex items-center gap-3">
-                                                <span className="text-[#a0aec0] font-bold text-base">{job.company}</span>
-                                                <span className="w-1 h-1 rounded-full bg-white/20" />
-                                                <span className="text-[#a0aec0] text-sm">Worldwide • Multiple locations</span>
-                                            </div>
-                                        </div>
+                {/* 2. SCROLLING/GRID CONTENT AREA Section */}
+                <div className="relative mx-auto max-w-[1400px] overflow-visible py-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {jobCards.map((job, idx) => (
+                            <div key={idx} className={`glass-card p-5 md:p-10 flex flex-col items-stretch justify-between gap-6 border-white/5 hover:border-[#00d9ff]/30 transition-all group w-full max-w-[380px] md:max-w-none mx-auto h-full`}>
+                                <div className="flex items-center gap-4 md:gap-8">
+                                    <div className={`w-14 h-14 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${job.color} flex items-center justify-center p-3 md:p-5 shadow-xl shrink-0`}>
+                                        <div className="scale-75 md:scale-100">{job.logo}</div>
                                     </div>
-
-                                    <div className="flex items-center gap-12">
-                                        <div className="hidden lg:flex gap-2">
-                                            {job.tags.map((tag, i) => (
-                                                <span key={i} className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-black text-white/50 uppercase tracking-widest">{tag}</span>
-                                            ))}
+                                    <div className="min-w-0">
+                                        <h4 className="text-white text-[1.2rem] md:text-2xl font-black mb-1 md:mb-2 group-hover:text-[#00d9ff] transition-colors truncate whitespace-nowrap">{job.role}</h4>
+                                        <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
+                                            <span className="text-[#a0aec0] font-bold text-[0.85rem] md:text-base truncate">{job.company}</span>
+                                            <span className="w-1 h-1 rounded-full bg-white/20 shrink-0" />
+                                            <span className="text-[#a0aec0] text-[0.75rem] md:text-sm truncate opacity-60">Worldwide</span>
                                         </div>
-                                        <div className="text-right">
-                                            <p className="text-[#a0aec0] text-[10px] font-black uppercase tracking-widest mb-1 opacity-50">Annual Salary</p>
-                                            <p className="text-white text-2xl font-black tracking-tight">{job.salary}</p>
-                                        </div>
-                                        <Button className="btn-primary py-4 px-10 text-xs font-black uppercase tracking-widest h-auto">Quick Apply</Button>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+
+                                <div className="space-y-6">
+                                    <div className="flex flex-wrap gap-2">
+                                        {job.tags.map((tag, i) => (
+                                            <span key={i} className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[9px] md:text-[10px] font-black text-white/50 uppercase tracking-widest leading-none">{tag}</span>
+                                        ))}
+                                    </div>
+                                    
+                                    <div className="flex items-end justify-between gap-4 border-t border-white/5 pt-6 mt-auto">
+                                        <div className="text-left">
+                                            <p className="text-[#a0aec0] text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1 opacity-50">Annual Salary</p>
+                                            <p className="text-white text-xl md:text-2xl font-black tracking-tight">{job.salary}</p>
+                                        </div>
+                                        <Button className="btn-primary py-3 md:py-4 px-6 md:px-10 text-[10px] md:text-xs font-black uppercase tracking-widest h-auto shadow-lg shadow-[#00d9ff]/10">Quick Apply</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
