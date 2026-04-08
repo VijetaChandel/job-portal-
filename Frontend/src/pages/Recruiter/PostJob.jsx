@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { Briefcase, Building2, MapPin, IndianRupee, Users, Target, FileText, Sparkles, X, CheckCircle, ChevronRight } from 'lucide-react';
+import { Briefcase, Building2, MapPin, IndianRupee, Users, Target, FileText, Sparkles, X, CheckCircle, ChevronRight, Plus } from 'lucide-react';
 import axios from 'axios';
 
 const PostJob = () => {

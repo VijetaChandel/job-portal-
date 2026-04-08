@@ -13,6 +13,23 @@ export const register = async (req, res) => {
             });
         };
 
+        // Strict Phone Validation (10 digits)
+        const cleanPhone = phoneNumber.replace(/\D/g, "");
+        if (cleanPhone.length < 10) {
+            return res.status(400).json({
+                message: "Phone number must be at least 10 digits",
+                success: false
+            });
+        }
+
+        // Strict Password Validation (min 6 chars)
+        if (password.length < 6) {
+            return res.status(400).json({
+                message: "Password must be at least 6 characters",
+                success: false
+            });
+        }
+
         const user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({
@@ -95,7 +112,12 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
+        return res.status(200).cookie("token", token, { 
+            maxAge: 1 * 24 * 60 * 60 * 1000, 
+            httpOnly: true, 
+            sameSite: 'none', 
+            secure: true 
+        }).json({
             message: `Welcome back ${user.fullname}`,
             user,
             success: true
@@ -159,7 +181,12 @@ export const updateProfile = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+        return res.status(200).cookie("token", "", { 
+            maxAge: 0,
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true
+        }).json({
             message: "Logged out successfully.",
             success: true
         })

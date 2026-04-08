@@ -20,13 +20,21 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
-        setLoading(true);
+        
         const { email, password } = e.target.elements;
         const emailValue = email.value.trim();
+        const passwordValue = password.value;
+
+        if (!emailValue || !passwordValue) {
+            setError("All credentials must be provided.");
+            return;
+        }
+
+        setLoading(true);
 
         const result = await login({
             email: emailValue,
-            password: password.value,
+            password: passwordValue,
             role: role
         });
 
@@ -50,8 +58,8 @@ const Login = () => {
 
             <Navbar />
             
-            <div className="flex-grow flex items-center justify-center py-20 px-4 relative z-10">
-                <div className="glass-card max-w-md w-full p-6 sm:p-10 animate-fade-in-up">
+            <div className="flex-grow flex items-center justify-center py-10 sm:py-20 px-4 relative z-10">
+                <div className="glass-card max-w-md w-full p-5 sm:p-10 animate-fade-in-up">
                     <div className="text-center mb-10">
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00d9ff] to-[#7c3aed] mb-6 shadow-lg shadow-[#00d9ff]/20">
                             <LogIn className="w-8 h-8 text-white" />
@@ -154,9 +162,9 @@ const Login = () => {
                         </Button>
                     </form>
 
-                    <p className="mt-10 text-center text-[#a0aec0] text-sm">
-                        Don't have an account?{' '}
-                        <Link to="/register" className="text-[#00d9ff] hover:text-[#7c3aed] font-bold transition-all underline decoration-[#00d9ff]/30 underline-offset-4">
+                    <p className="mt-10 text-center text-[#a0aec0] text-sm flex flex-col sm:flex-row items-center justify-center gap-2">
+                        <span>Don't have an account?</span>
+                        <Link to="/register" className="text-[#00d9ff] hover:text-[#7c3aed] font-bold transition-all underline decoration-[#00d9ff]/30 underline-offset-4 block py-2">
                             Create Account
                         </Link>
                     </p>

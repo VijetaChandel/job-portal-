@@ -118,7 +118,7 @@ const Jobs = () => {
                                 Filters
                             </div>
 
-                            <div className="flex flex-wrap gap-4 flex-grow">
+                            <div className="flex flex-wrap gap-4 flex-grow justify-center lg:justify-start">
                                 <select
                                     value={filterJobType}
                                     onChange={(e) => setFilterJobType(e.target.value)}

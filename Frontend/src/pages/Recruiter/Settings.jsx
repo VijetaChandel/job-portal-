@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/Button';
 import axios from 'axios';
-import { User, Mail, Phone, FileText, Code, Save, Loader2, Settings as SettingsIcon, ShieldCheck, Sparkles, CheckCircle, AlertCircle } from 'lucide-react';
+import { User, Mail, Phone, FileText, Code, Save, Loader2, Settings as SettingsIcon, ShieldCheck, Sparkles, CheckCircle, AlertCircle, X, Briefcase } from 'lucide-react';
+import Navbar from '../../components/layout/Navbar';
+import Footer from '../../components/layout/Footer';
 
 const Settings = () => {
     const { user, setUser } = useAuth();
@@ -67,23 +69,38 @@ const Settings = () => {
         }
     };
 
-    return (
-        <div className="max-w-5xl mx-auto space-y-10 animate-fade-in pb-20">
-            {/* Header */}
+    const handleSyncClick = (e) => {
+        e.preventDefault();
+        setMessage({ 
+            type: 'success', 
+            text: 'Initializing operational data synchronization with central cluster... Access verified. Data integrity check complete.' 
+        });
+        setTimeout(() => setMessage({ type: '', text: '' }), 5000);
+    };
+
+    const isStudent = user?.role === 'student';
+
+    const content = (
+        <div className={`space-y-10 animate-fade-in ${isStudent ? 'pt-32 pb-24 max-w-7xl mx-auto px-6' : 'max-w-5xl mx-auto pb-20'}`}>
+            {/* Header Area */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00d9ff]/10 border border-[#00d9ff]/20 text-[#00d9ff] text-[10px] font-bold tracking-widest uppercase mb-4">
                         <SettingsIcon className="w-3 h-3" />
-                        System Configuration
+                        {isStudent ? 'Personal Preferences' : 'System Configuration'}
                     </div>
                     <h2 className="text-4xl font-extrabold text-white tracking-tight">Account Settings</h2>
-                    <p className="text-[#a0aec0] mt-2 font-medium">Refine your professional presence and administrative preferences.</p>
+                    <p className="text-[#a0aec0] mt-2 font-medium">Refine your professional presence and account preferences.</p>
                 </div>
                 <div className="hidden lg:flex items-center gap-3 glass-card px-5 py-3 border-[#7c3aed]/20">
-                    <ShieldCheck className="w-5 h-5 text-[#7c3aed]" />
+                    {isStudent ? (
+                        <Briefcase className="w-5 h-5 text-[#00d9ff]" />
+                    ) : (
+                        <ShieldCheck className="w-5 h-5 text-[#7c3aed]" />
+                    )}
                     <div className="text-left">
-                        <p className="text-[10px] font-black text-[#a0aec0] uppercase tracking-widest leading-none">Security Status</p>
-                        <p className="text-xs font-bold text-white mt-1">Verified Admin Access</p>
+                        <p className="text-[10px] font-black text-[#a0aec0] uppercase tracking-widest leading-none">{isStudent ? 'Candidate Status' : 'Security Status'}</p>
+                        <p className="text-xs font-bold text-white mt-1">{isStudent ? 'Verified Talent Profile' : 'Verified Admin Access'}</p>
                     </div>
                 </div>
             </div>
@@ -227,6 +244,7 @@ const Settings = () => {
                     <Button
                         type="submit"
                         disabled={loading}
+                        onClick={handleSyncClick}
                         className="w-full sm:w-auto px-12 py-4 btn-primary h-auto flex items-center justify-center gap-3 shadow-xl shadow-[#00d9ff]/20 font-bold tracking-tight text-lg group"
                     >
                         {loading ? (
@@ -245,6 +263,22 @@ const Settings = () => {
             </form>
         </div>
     );
+
+    if (isStudent) {
+        return (
+            <div className="min-h-screen bg-[#0f1419] font-sans selection:bg-[#00d9ff]/30 relative overflow-hidden">
+                {/* Background Glows */}
+                <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#00d9ff]/5 rounded-full blur-[140px] pointer-events-none"></div>
+                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#7c3aed]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+                <Navbar />
+                {content}
+                <Footer />
+            </div>
+        );
+    }
+
+    return content;
 };
 
 export default Settings;

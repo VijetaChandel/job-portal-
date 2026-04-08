@@ -2,6 +2,11 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+// Configure axios for production
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+axios.defaults.baseURL = BASE_URL;
+axios.defaults.withCredentials = true;
+
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -37,7 +42,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Login error:", error);
             return {
                 success: false,
-                message: error.response?.data?.message || "Login failed"
+                message: error.response?.data?.message || "[AUTH_LOGIN_ERR] Login failed"
             };
         }
     };
@@ -58,7 +63,7 @@ export const AuthProvider = ({ children }) => {
             console.error("Signup error:", error);
             return {
                 success: false,
-                message: error.response?.data?.message || "Signup failed"
+                message: error.response?.data?.message || "[SIGNUP_ERR] Signup failed"
             };
         }
     };

@@ -1,8 +1,17 @@
 import React from 'react';
 import { Search, Star, Briefcase, Globe, Zap, Users, TrendingUp, Cpu } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { useAuth } from '../../context/AuthContext';
 
 const Hero = () => {
+    const { user } = useAuth();
+    
+    const handleSearchClick = (e) => {
+        if (!user) {
+            e.preventDefault();
+            alert("If you want to search your job, you have to login.");
+        }
+    };
     const jobCards = [
         {
             company: 'Google',
@@ -46,16 +55,16 @@ const Hero = () => {
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-12 border-b border-white/5 pb-16 mb-16 px-4">
                     
                     {/* Left: Description Block */}
-                    <div className="lg:w-1/4 space-y-4 animate-fade-in-up">
-                        <div className="flex items-center gap-2 text-[#00d9ff] font-black text-xs uppercase tracking-widest">
+                    <div className="lg:w-1/4 space-y-4 animate-fade-in-up flex flex-col items-center lg:items-start text-center lg:text-left">
+                        <div className="flex items-center gap-2 text-[#00d9ff] font-black text-[10px] md:text-xs uppercase tracking-widest">
                             <TrendingUp className="w-4 h-4" />
                             <span>Trending Platform</span>
                         </div>
-                        <h3 className="text-white text-xl font-black leading-tight">
-                            50k+ Active Job <br />
+                        <h3 className="text-white text-lg md:text-xl font-black leading-tight">
+                            50k+ Active Job <br className="hidden md:block" />
                             <span className="text-[#a0aec0]">Opportunities Today.</span>
                         </h3>
-                        <p className="text-[#a0aec0] text-sm leading-relaxed max-w-[280px]">
+                        <p className="text-[#a0aec0] text-[12px] md:text-sm leading-relaxed max-w-[280px]">
                             Leverage AI-driven matching to land your dream role in tech, design, or engineering.
                         </p>
                     </div>
@@ -82,7 +91,10 @@ const Hero = () => {
                                     placeholder="Search Role..." 
                                     className="bg-transparent border-none focus:ring-0 text-white placeholder-[#a0aec0]/40 flex-1 px-3 text-sm font-bold uppercase tracking-widest"
                                 />
-                                <Button className="btn-primary py-2 px-6 text-xs font-black uppercase tracking-widest">
+                                <Button 
+                                    onClick={handleSearchClick}
+                                    className="btn-primary py-2 px-6 text-xs font-black uppercase tracking-widest"
+                                >
                                     Go
                                 </Button>
                             </div>

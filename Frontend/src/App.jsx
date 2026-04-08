@@ -32,6 +32,11 @@ function App() {
             <Profile />
           </ProtectedRoute>
         } />
+        <Route path="/settings" element={
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        } />
 
         {/* Recruiter Routes - Protected */}
         <Route

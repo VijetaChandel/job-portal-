@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/layout/Navbar';
+import { useAuth } from '../context/AuthContext';
 import Hero from '../components/layout/Hero';
 import Footer from '../components/layout/Footer';
 import FeaturedJobs from '../components/layout/FeaturedJobs';
@@ -9,6 +10,7 @@ import axios from 'axios';
 import { Button } from '../components/ui/Button';
 
 const Home = () => {
+    const { user } = useAuth();
     const [isExpModalOpen, setIsExpModalOpen] = React.useState(false);
     const [dynamicTestimonials, setDynamicTestimonials] = React.useState([]);
 
@@ -89,7 +91,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <FeaturedJobs />
+                {user && <FeaturedJobs />}
 
                 {/* Testimonials */}                <section className="py-24 bg-white/5 border-y border-white/5 relative">
                     <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00d9ff]/5 rounded-full blur-[120px] pointer-events-none"></div>

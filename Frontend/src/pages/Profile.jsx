@@ -48,8 +48,8 @@ const Profile = () => {
                     {/* Header/Info Card */}
                     <div className="glass-card overflow-hidden group">
                         <div className="h-48 bg-gradient-to-r from-[#00d9ff] via-[#7c3aed] to-[#ec4899] opacity-20 group-hover:opacity-30 transition-opacity duration-700" />
-                        <div className="px-10 pb-10">
-                            <div className="relative flex flex-col lg:flex-row items-end gap-8 -mt-20 mb-12">
+                        <div className="px-5 sm:px-10 pb-10">
+                            <div className="relative flex flex-col lg:flex-row items-center lg:items-end gap-8 -mt-20 mb-12 text-center lg:text-left">
                                 <div className="w-40 h-40 bg-[#0f1419] rounded-[2.5rem] border-[6px] border-[#0f1419] shadow-2xl overflow-hidden relative group/avatar">
                                     {user.profile?.profilePhoto ? (
                                         <img src={user.profile.profilePhoto} alt="Profile" className="w-full h-full object-cover group-hover/avatar:scale-110 transition-transform duration-500" />
@@ -132,7 +132,7 @@ const Profile = () => {
                                                 </div>
                                             </div>
                                             <a
-                                                href={`http://localhost:8000/${user.profile.resume}`}
+                                                href={`${axios.defaults.baseURL}/${user.profile.resume}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="p-3 bg-white/5 rounded-xl hover:bg-white/10 text-white transition-colors"

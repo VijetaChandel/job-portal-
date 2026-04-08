@@ -34,7 +34,7 @@ const JobApplicants = () => {
             alert('Resume not available');
             return;
         }
-        const resumeUrl = `http://localhost:8000/${resumePath}`;
+        const resumeUrl = `${axios.defaults.baseURL}/${resumePath}`;
         window.open(resumeUrl, '_blank');
     };
 

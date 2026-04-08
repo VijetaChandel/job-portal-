@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
     Menu, X, Rocket, User as UserIcon, 
     LogOut, Settings, LayoutDashboard, 
@@ -11,6 +11,7 @@ import { cn } from '../../utils/cn';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -36,9 +37,9 @@ const Navbar = () => {
     }, []);
 
     const recruiterLinks = [
-        { name: 'Admin Hub', path: '/admin/companies', icon: <LayoutDashboard className="w-4 h-4" /> },
-        { name: 'Post Vacancy', path: '/admin/jobs/create', icon: <PlusCircle className="w-4 h-4" /> },
-        { name: 'Analytics', path: '/admin/overview', icon: <PieChart className="w-4 h-4" /> },
+        { name: 'Dashboard', path: '/recruiter/dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
+        { name: 'Post Job', path: '/recruiter/post-job', icon: <PlusCircle className="w-4 h-4" /> },
+        { name: 'My Jobs', path: '/recruiter/my-jobs', icon: <Briefcase className="w-4 h-4" /> },
     ];
 
     const studentLinks = [
@@ -174,7 +175,7 @@ const Navbar = () => {
                                 </Link>
                                 <Button
                                     className="btn-primary px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-[#00d9ff]/20"
-                                    onClick={() => window.location.href = '/register'}
+                                    onClick={() => navigate('/register')}
                                 >
                                     Join Network
                                 </Button>
@@ -200,7 +201,7 @@ const Navbar = () => {
 
             {/* Mobile Terminal Menu */}
             {isMobileMenuOpen && (
-                <div className="lg:hidden fixed inset-0 top-[88px] bg-[#0f1419]/98 backdrop-blur-2xl z-[90] p-6 animate-fade-in flex flex-col">
+                <div className="lg:hidden fixed inset-0 top-[88px] bg-[#0f1419]/98 backdrop-blur-2xl z-[90] p-6 animate-in slide-in-from-right duration-500 overflow-hidden flex flex-col">
                     <div className="space-y-10 flex-1 overflow-y-auto pb-10">
                         <div className="space-y-6">
                             <p className="text-[10px] font-black text-[#a0aec0] uppercase tracking-[0.4em] mb-4 opacity-50">Core Assets</p>
@@ -219,7 +220,7 @@ const Navbar = () => {
                         
                         <div className="pt-8 border-t border-white/10">
                             {user ? (
-                                <div className="space-y-6">
+                                <div className="space-y-6 mt-8">
                                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/10">
                                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00d9ff] to-[#7c3aed] flex items-center justify-center text-white text-xl font-black">
                                             {user.fullname?.charAt(0)}
@@ -238,7 +239,7 @@ const Navbar = () => {
                                 <div className="flex flex-col gap-4">
                                     <Button
                                         className="btn-primary w-full py-5 text-xs font-black uppercase tracking-widest"
-                                        onClick={() => { window.location.href = '/register'; setIsMobileMenuOpen(false); }}
+                                        onClick={() => { navigate('/register'); setIsMobileMenuOpen(false); }}
                                     >
                                         Join Ecosystem
                                     </Button>
